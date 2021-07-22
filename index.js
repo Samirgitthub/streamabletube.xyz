@@ -5,7 +5,7 @@ const ytdl = require("ytdl-core");
 const got = require("got");
 const {parse} = require("url");
 
-app.use(express.static("web/"));
+app.use(express.static(`${__dirname}/web/`));
 app.use(cors());
 
 app.get("/stream/:type/:id", async function(req, res) {
