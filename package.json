@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "got": "^11.8.2",
+    "ytdl-core": "^4.9.0"
+  },
+  "name": "streamable-tube",
+  "description": "Simple API meant to stream YouTube videos into HTML5 players quickly without having to download them to your own server.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tacohitbox/streamable-tube.git"
+  },
+  "keywords": [
+    "youtube",
+    "youtube-stream",
+    "html5",
+    "html5-player"
+  ],
+  "author": "tacohitbox",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/tacohitbox/streamable-tube/issues"
+  },
+  "homepage": "https://github.com/tacohitbox/streamable-tube#readme"
+}
