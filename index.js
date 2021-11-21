@@ -10,24 +10,25 @@ app.use(cors());
 
 app.get("/stream/:type/:id", async function(req, res) {
   if (ytdl.validateID(req.params.id)) {
-    var a = await ytdl.getInfo(req.params.id);
-    var f = ytdl.chooseFormat(a.formats, getFilter(req.params.type));
-    res.redirect(`/proxy/${Buffer.from(f.url, "ascii").toString("base64url")}`);
+    try {
+      var a = await ytdl.getInfo(req.params.id);
+      var f = ytdl.chooseFormat(a.formats, getFilter(req.params.type));
+      var hdr = req.headers;
+      hdr.host = parse(url, true).host;
+      console.log(f);
+      if (hdr.referer) { hdr.referer = ""; }
+      got.stream(f, {
+        headers: hdr
+      }).pipe(res).on("error", function(err) {
+        res.send(err.stack || err.message || err.code || err);
+      });
+    } catch(err) {
+      var e = err.stack || err.message || err.code || err;
+      res.send(e);
+    }
   } else {
     res.send(404);
   }
-});
-
-app.get("/proxy/:url", function(req, res) {
-  var url = Buffer.from(req.params.url, "base64url").toString("ascii");
-  var hdr = req.headers;
-  hdr.host = parse(url, true).host;
-  if (hdr.referer) { hdr.referer = ""; }
-  got.stream(url, {
-    headers: hdr
-  }).pipe(res).on("error", function(err) {
-    res.send(err.stack || err.message || err.code || err);
-  });
 });
 
 app.listen((process.env.PORT || 3300), function() {
