@@ -12,14 +12,15 @@ app.get("/stream/:type/:id", async function(req, res) {
   if (ytdl.validateID(req.params.id)) {
     try {
       var a = await ytdl.getInfo(req.params.id);
-      var f = ytdl.chooseFormat(a.formats, getFilter(req.params.type));
+      var f = ytdl.chooseFormat(a.formats, getFilter(req.params.type)).url;
       var hdr = req.headers;
       hdr.host = parse(f, true).host;
       if (hdr.referer) { hdr.referer = ""; }
       got.stream(f, {
         headers: hdr
       }).pipe(res).on("error", function(err) {
-        res.send(err.stack || err.message || err.code || err);
+        var e = err.stack || err.message || err.code || err;
+        res.send(e);
       });
     } catch(err) {
       var e = err.stack || err.message || err.code || err;
