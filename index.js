@@ -14,8 +14,7 @@ app.get("/stream/:type/:id", async function(req, res) {
       var a = await ytdl.getInfo(req.params.id);
       var f = ytdl.chooseFormat(a.formats, getFilter(req.params.type));
       var hdr = req.headers;
-      hdr.host = parse(url, true).host;
-      console.log(f);
+      hdr.host = parse(f, true).host;
       if (hdr.referer) { hdr.referer = ""; }
       got.stream(f, {
         headers: hdr
