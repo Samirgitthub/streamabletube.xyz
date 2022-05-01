@@ -15,7 +15,8 @@ app.get("/stream/:type/:id", async function(req, res) {
       var f = ytdl.chooseFormat(a.formats, getFilter(req.params.type)).url;
       var hdr = req.headers;
       hdr.host = parse(f, true).host;
-      if (hdr.referer) { hdr.referer = ""; }
+      if (hdr.range) f = `${f}&range=${hdr.range}`;
+      if (hdr.referer) hdr.referer = "";
       got.stream(f, {
         headers: hdr
       }).pipe(res).on("error", function(err) {
