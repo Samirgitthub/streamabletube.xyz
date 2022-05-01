@@ -7,9 +7,10 @@
   },
   "name": "streamable-tube",
   "description": "Simple API meant to stream YouTube videos into HTML5 players quickly without having to download them to your own server.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

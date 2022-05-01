@@ -4,9 +4,14 @@ const cors = require("cors");
 const ytdl = require("ytdl-core");
 const axios = require("axios");
 const {parse} = require("url");
+const {version} = require('./package.json');
 
 app.use(express.static(`${__dirname}/web/`));
 app.use(cors());
+
+app.get('/version', (req, res) => {
+  res.json(version)
+})
 
 app.get("/info/:id", async function(req, res) {
   if (ytdl.validateID(req.params.id)) {
@@ -42,10 +47,12 @@ app.get("/stream/:type/:id", async function(req, res) {
       res.status(streamReq.data.statusCode)
       streamReq.data.pipe(res).on("error", function(err) {
         let e = err.stack || err.message || err.code || err;
+        // cant send error, because the headers have already been sent. don't know how to solve this at the moment.
         console.log(err)
       });
     } catch(err) {
       let e = err.stack || err.message || err.code || err;
+      // cant send error, because the headers have already been sent. don't know how to solve this at the moment.
       console.log(err)
     }
   } else {
